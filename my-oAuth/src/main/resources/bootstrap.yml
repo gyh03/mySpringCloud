@@ -1,0 +1,68 @@
+management:
+ security:
+  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
+server:
+  port: 9998
+  tomcat:
+    accept-count: 1000
+    max-threads: 1000
+    max-connections: 2000
+spring:
+  application:
+      name: my-OAuth
+  sleuth:
+   sampler:
+     percentage: 1.0 #加快收集效率
+  session:
+     store-type: none
+  cloud:
+    config:
+       enabled: true
+       name: my-oauth,my-mysql,my-redis #要读取的配置文件名 对应{application}部分
+       profile: default,default,default  #映射到客户端上的“spring.profiles.active”（逗号分隔列表）; 和
+       uri: http://localhost:8888
+    bus:
+      trace:
+        enabled: true #开启消息跟踪
+  datasource:
+      druid:
+      # 192.168.3.81 putest putest123
+  #      url:  jdbc:mysql://192.168.3.81:3306/erp_platform_server?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+  #      username: putest
+  #      password: putest123
+        url:  jdbc:mysql://112.74.181.24:3306/cache?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+        username: root
+        password: 123456
+  #      192.168.3.149 8066 cy1 cy2108cc
+        driverClassName:  com.mysql.jdbc.Driver
+        initialSize:  1
+        minIdle:  1
+        maxActive:  200
+        maxWait:  60000
+        testOnBorrow: true
+        testWhileIdle:  false
+        testOnReturn: false
+        removeAbandoned: true
+        removeAbandonedTimeout: 60
+        timeBetweenEvictionRunsMillis:  300000
+        validationQuery:  SELECT 'x'
+        maxPoolPreparedStatementPerConnectionSize:  20
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        security: DEBUG
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+gyh:
+  oauth:
+    clientid: my_oauth
+    secret: my_secret
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka/
+  instance:
+    prefer-ip-address: true #显示服务器IP

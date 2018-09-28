@@ -1,0 +1,44 @@
+management:
+ security:
+  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
+server:
+  port: 9998
+spring:
+  application:
+      name: v2r1-auth-server
+  sleuth:
+   sampler:
+     percentage: 1.0 #加快收集效率
+  session:
+     store-type: none
+  cloud:
+    config:
+       enabled: true
+       name: gyh-mysql,gyh-user-defined,gyh-redis,springCloud #要读取的配置文件名 对应{application}部分
+       profile: default,default,default,default  #映射到客户端上的“spring.profiles.active”（逗号分隔列表）; 和
+       uri: http://192.168.3.172:8888
+#       discovery:
+#         enabled: true
+#         service-id: gyh-config
+    bus:
+      trace:
+        enabled: true #开启消息跟踪
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+hio:
+  oauth:
+    clientid: hio_oauth
+    secret: hio_secret
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.173:1111/eureka/,http://192.168.3.174:1111/eureka/
+  instance:
+    prefer-ip-address: true #显示服务器IP
