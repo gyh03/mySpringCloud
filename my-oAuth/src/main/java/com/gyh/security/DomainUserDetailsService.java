@@ -20,17 +20,17 @@ import java.util.Map;
  * @author guoyanhong
  * @date 2018/9/28 21:18
  */
-@Service("userDetailsService")
+@Service
 public class DomainUserDetailsService implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired()
+    @Autowired
     private UserDao userDao;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        logger.info("{} wantLogin", username);
+        logger.info("{} want Login", username);
         List<? extends GrantedAuthority> authorities = new ArrayList();
         Map<String, String> userInfo = userDao.queryUserinfoByMobile(username);
 

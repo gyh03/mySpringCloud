@@ -1,6 +1,5 @@
 package com.gyh.config;
 
-import com.gyh.mycatDemo.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -86,7 +85,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     Map r = new HashMap();
                     r.put("message", "Invalid access token");
                     r.put("code", 401);
-                    return new ResponseEntity(JacksonUtils.toJson(r), headers, responseEntity.getStatusCode());
+                    return new ResponseEntity(r, headers, responseEntity.getStatusCode());
+//                    return new ResponseEntity(JacksonUtils.toJson(r), headers, responseEntity.getStatusCode());
                 } else {
                     return new ResponseEntity(body, headers, responseEntity.getStatusCode());
                 }

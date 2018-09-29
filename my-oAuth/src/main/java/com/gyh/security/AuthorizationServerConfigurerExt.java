@@ -1,6 +1,5 @@
-package com.gyh.config;
+package com.gyh.security;
 
-import com.gyh.security.JedisConnectionFactoryExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,31 +16,38 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import java.util.List;
+
 /**
- * Created by cuipeng on 2018/1/23.
+ * 自定义 security 对象，扩展代码实现自己的功能
+ *
+ * @author guoyanhong
+ * @date 2018/9/29 9:57
  */
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfigurerExt extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-        //@Autowired
-        //private AuthorizationEndpoint authorizationEndpoint;
     @Autowired
     private RedisConnectionFactory connectionFactory;
+
     @Autowired
-	private UserDetailsService userDetailsService;
-    @Value("${gyh.oauth.clientid}")
-    private String clientId;
-    @Value("${gyh.oauth.secret}")
-    private String secret;
+    private DomainUserDetailsService userDetailsService;
+
+    @Autowired
+    private AuthorizationServerConfig authorizationServerConfig;
+
+
     @Primary
     @Bean
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setAccessTokenValiditySeconds(60*60*10); // 有效24小时，设定为-1表示token不过期
-        defaultTokenServices.setRefreshTokenValiditySeconds(60*60*24*30);// 有效期30天 -1表示token不过期
+        // -1表示token不过期
+        defaultTokenServices.setAccessTokenValiditySeconds(authorizationServerConfig.getAccessTokenSeconds());
+        // -1表示token不过期
+        defaultTokenServices.setRefreshTokenValiditySeconds(authorizationServerConfig.getRefreshTokenSeconds());
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setReuseRefreshToken(true);
         defaultTokenServices.setTokenStore(tokenStore());
@@ -53,36 +59,34 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public RedisTokenStore tokenStore() {
         JedisConnectionFactoryExt connectionFactoryExt = new JedisConnectionFactoryExt(connectionFactory);
         return new RedisTokenStore(connectionFactoryExt);
-//        return new RedisTokenStore(connectionFactory);
     }
 
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints
-                .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService)//若无，refresh_token会有UserDetailsService is required错误
-                .tokenStore(tokenStore());
-        endpoints.tokenServices(tokenServices());// token 自定义
+        endpoints.authenticationManager(authenticationManager)
+                // 注入自定义 DomainUserDetailsService，实现从数据库查询用户以校验密码
+                .userDetailsService(userDetailsService)
+                // 自定义 tokenStore ，实现 redis 集群存储token
+                .tokenStore(tokenStore())
+                // 自定义tokenServices，配置 token 过期时间
+                .tokenServices(tokenServices());
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security
-                .tokenKeyAccess("permitAll()")
+        security.tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        List<String> authTypes = authorizationServerConfig.getAuthorizedGrantTypes();
+        String[] authTypeArr = authTypes.toArray(new String[authTypes.size()]);
         clients.inMemory()
-                .withClient(clientId)
-                .scopes("gyh")
-                .secret(secret)
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token");
-//            .and()
-//                .withClient("webapp")
-//                .scopes("xx")
-//                .authorizedGrantTypes("implicit");
+                .withClient(authorizationServerConfig.getClientId())
+                .scopes(authorizationServerConfig.getScopes())
+                .secret(authorizationServerConfig.getSecret())
+                .authorizedGrantTypes(authTypeArr);
     }
 }
