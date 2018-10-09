@@ -10,7 +10,12 @@ import java.util.Map;
 public interface UserDao {
 
 
+    /**
+     * 根据用户名查询用户信息
+     * @param username
+     * @return
+     */
     @Select("SELECT username,password FROM `yfs_user` u WHERE u.`username`=#{username}")
-    Map<String,String> queryUserinfoByMobile(@Param("username") String username);
+    Map<String,String> queryUserinfoByUsername(@Param("username") String username);
 
 }

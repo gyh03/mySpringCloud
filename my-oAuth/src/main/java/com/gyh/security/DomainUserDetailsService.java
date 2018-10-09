@@ -1,8 +1,7 @@
 package com.gyh.security;
 
 import com.gyh.dao.UserDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,27 +14,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * @author guoyanhong
  * @date 2018/9/28 21:18
  */
+
+@Slf4j
 @Service
 public class DomainUserDetailsService implements UserDetailsService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserDao userDao;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        logger.info("{} want Login", username);
-        List<? extends GrantedAuthority> authorities = new ArrayList();
-        Map<String, String> userInfo = userDao.queryUserinfoByMobile(username);
+        log.info("{} want Login", username);
+        Map<String, String> userInfo = userDao.queryUserinfoByUsername(username);
 
+        // 创建一个 security 的 User 对象
+        List<? extends GrantedAuthority> authorities = new ArrayList();
         User u = new User(username, userInfo.get("password"), authorities);
 
         return u;
     }
 }
+

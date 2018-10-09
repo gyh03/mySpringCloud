@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 
 @SpringCloudApplication
-@EnableFeignClients
+//@EnableFeignClients
 public class OAuthApplication {
 //    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -22,8 +22,6 @@ public class OAuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(OAuthApplication.class, args);
         System.out.println("【【【【【【 OAuthApplication 微服务 】】】】】】已启动.");
-
-
     }
 
 }

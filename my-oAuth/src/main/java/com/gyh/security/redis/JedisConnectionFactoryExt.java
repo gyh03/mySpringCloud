@@ -1,4 +1,4 @@
-package com.gyh.security;
+package com.gyh.security.redis;
 
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
