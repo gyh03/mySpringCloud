@@ -1,0 +1,81 @@
+info:
+  version: "v2"
+  name: "gyh"
+management:
+ security:
+  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
+server:
+  port: 9999
+  tomcat:
+    max-threads: 800 #最大线程数
+    min-spare-threads: 100 #最小活跃线程数
+    max-connections: 10000 #在任何给定的时间服务器接受并处理的最大连接数
+  connection-timeout: 20000 #设置tomcat连接超时时间
+spring:
+  application:
+    name: my-gateway
+  sleuth:
+   sampler:
+     percentage: 1.0 #加快收集效率
+  cloud:   #启动负载均衡的重试机制，默认false
+    loadbalancer:
+      retry:
+        enabled: true
+  http:
+    multipart:
+      enabled: true   # 启用http上传处理
+      max-file-size: 200MB # 设置单个文件的最大长度
+      max-request-size: 200MB # 设置最大的请求文件的大小
+      file-size-threshold: 1MB  # 当上传文件达到1MB的时候进行磁盘写入
+      location: /  # 上传的临时目录
+#每个服务超时时间
+#断路器默认时间10秒
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true #Hystrix是否启用超时时间
+        isolation:
+          thread:
+            timeoutInMilliseconds: 80000  #Hystrix断路器的超时时间，默认是1s
+  threadpool:
+      default:
+        coreSize: 10000 #缺省为10
+ribbon:
+    ConnectTimeout: 60000 #ribbon请求连接的超时时间
+    ReadTimeout: 60000 #请求处理的超时时间
+    MaxAutoRetries: 1  #对当前服务的重试次数
+    MaxAutoRetriesNextServer: 1 #切换服务的次数
+    OkToRetryOnAllOperations: true #所有请求都开启重试
+zuul:
+  #retryable: true #开始重试
+  prefix: /myZuul #配置统一前缀
+  host:
+    max-per-route-connections: 1000
+    max-total-connections: 1000
+  semaphore:
+   maxSemaphores: 1000 #增加信号量 默认10
+  ribbon:
+    eager-load:
+      enabled: true
+  routes:
+      oAuth:
+        serviceId: my-oAuth
+      testApp:
+        serviceId: my-testApp
+#    myoauth2:
+#        path: /myoauth2/**
+#        sensitiveHeaders:
+#        serviceId: v2r1-auth-server
+#    PlatformService:
+##      strip-prefix: false
+#      path: /platform/**
+#      sensitiveHeaders:
+#      serviceId: PlatformService
+
+
+  add-host-header: true #解决重定向问题
+  add-proxy-headers: true
+  sensitive-headers: true #解决cookie与头信息不会传递到下游的外部服务器 cookie在默认网关是不会传递的
+  servlet-path: /

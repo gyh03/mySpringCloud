@@ -1,0 +1,22 @@
+spring:
+  redis:
+    database: 0
+    timeout: 60000
+    password: 123456
+#    host: 127.0.0.1
+#    port: 6379
+    cluster: # 集群配置
+      nodes: 112.74.181.24:7001,112.74.181.24:7002,112.74.181.24:7003,112.74.181.24:7004,112.74.181.24:7005,112.74.181.24:7006
+    pool: # 连接池配置
+      maxTotal: 8000 #最大连接数
+      maxIdle: 60 #闲置最大连接数
+      minIdle: 0 #闲置最小连接数
+      maxWaitMillis: 15000 #到达最大连接数后，调用者阻塞时间
+      minEvictableIdleTimeMillis: 300000 #连接空闲的最小时间，可能被移除
+      softMinEvictableIdleTimeMillis: -1 #连接空闲的最小时间，多余最小闲置连接的将被移除
+      numTestsPerEvictionRun: 3 #设置每次检查闲置的个数
+      testOnBorrow: true #申请连接时，是否检查连接有效
+      testOnReturn: true #返回连接时，是否检查连接有效
+      testWhileIdle: true #空闲超时,是否执行检查有效
+      timeBetweenEvictionRunsMillis: 60000 #空闲检查时间
+      blockWhenExhausted: true #当连接数耗尽，是否阻塞

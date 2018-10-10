@@ -1,0 +1,10 @@
+management:
+ security:
+  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
+spring:
+  config:
+    name: application-native #本地开发环境
+#    name: application-dev-file #开发联调环境
+  #  name: application-test-file #测试环境
+#    name: application-prod     #生产环境
+# 注意 必须使用该配置启动项目，此配置不能少

@@ -1,0 +1,23 @@
+spring:
+  rabbitmq:
+    host: 112.74.181.24
+    port: 5672
+    username: rabbitadmin
+    password: 123456
+#    host: 192.168.3.102
+#    port: 5672
+#    username: test
+#    password: test
+#spring:
+#  rabbitmq:
+#    host: 192.168.3.52 #127.0.0.1
+#    port: 5672
+#    username: admin #guest
+#    password: admin #guest
+
+#监控页面：http://192.168.3.96:15672
+
+#端口5672
+#用户名platform， 密码platform
+#policy ： ha-allqueue 镜像模式
+#exchange和queue自己建立就可以了

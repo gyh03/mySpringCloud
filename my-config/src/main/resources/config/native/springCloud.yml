@@ -1,0 +1,65 @@
+#spring cloud的通用配置
+server:
+  undertow:
+    buffer-size: 1024
+  tomcat:
+    max-threads: 800 #最大线程数
+    min-spare-threads: 100 #最小活跃线程数
+    max-connections: 10000 #在任何给定的时间服务器接受并处理的最大连接数
+  connection-timeout: 80000 #设置tomcat连接超时时间
+info:
+  version: "v2"
+  name: "gyh"
+management:
+ security:
+  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
+spring: 
+  mvc:
+    throw-exception-if-no-handler-found: true
+  freemarker: 
+    cache:  false
+    request-context-attribute:  request
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  session:
+    store-type: none
+  http:
+    multipart:
+      enabled: true   # 启用http上传处理
+      max-file-size: 100MB # 设置单个文件的最大长度
+      max-request-size: 100MB # 设置最大的请求文件的大小
+      file-size-threshold: 1MB  # 当上传文件达到1MB的时候进行磁盘写入
+      location: /  # 上传的临时目录
+  sleuth:
+   sampler:
+     percentage: 1 #加快收集效率
+  cloud:   #启动负载均衡的重试机制，默认false
+    loadbalancer:
+      retry:
+        enabled: true
+feign:
+  hystrix:
+   enabled: true # Feign 整合 Hystrix开启Hystrix断路器
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 130000  #设置API网关路由路由转发请求的hystrixCommand执行超时时间 单位毫秒
+  threadpool: #线程池核心线程数
+    default:
+     coreSize: 1000 #缺省为10
+ribbon:
+  ConnectTimeout: 60000 #请求连接的超时时间
+  ReadTimeout: 60000 #请求处理的超时时间
+  MaxAutoRetries: 1  #对当前实例的重试次数
+  MaxAutoRetriesNextServer: 1 #切换实例的重试次数
+  OkToRetryOnAllOperations: true #对所有操作请求都进行重试
+  MaxTotalConnections: 2000   # 默认值
+  MaxConnectionsPerHost: 2000 # 默认值
+  eager-load: #缓存Ribbon配置
+    enabled: true
+    clients: my-oAuth,my-testApp

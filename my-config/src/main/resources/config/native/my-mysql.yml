@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    druid:
+    # 192.168.3.81 putest putest123
+#      url:  jdbc:mysql://192.168.3.81:3306/erp_platform_server?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
+#      username: putest
+#      password: putest123
+      #开发环境库
+      url: jdbc:mysql://112.74.181.24:3306/cache?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useAffectedRows=true&zeroDateTimeBehavior=convertToNull
+      #   测试库
+      # url:  jdbc:mysql://192.168.3.149:8066/erp_platform_server?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 123456
+      driverClassName:  com.mysql.jdbc.Driver
+      initialSize:  10
+      minIdle: 10
+      maxActive: 20
+      maxWait: 60000
+      testOnBorrow: true
+      testWhileIdle: false
+      testOnReturn: false
+      removeAbandoned: true
+      removeAbandonedTimeout: 60
+      timeBetweenEvictionRunsMillis: 300000
+      validationQuery:  SELECT 'x'
+      maxPoolPreparedStatementPerConnectionSize: 20
+      minEvictableIdleTimeMillis: 300000
+      filters: stat,log4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=100
