@@ -132,8 +132,8 @@ public class AuthorizationServerExt implements AuthorizationServerConfigurer {
     }
 
     /**
-     * 自定义密码校验器
-     *
+     * 密码校验器，用于校验密码
+     * 可以自定义一个类实现接口 PasswordEncoder，重写其方法，实现自定义密码加密校验规则
      * @return
      */
     @Bean
