@@ -1,10 +1,3 @@
-#默认注册中心配置文件
-info:
-  version: "v2"
-  name: "gyh"
-management:
- security:
-  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
 #端口号
 server:
    port: 1111
@@ -14,12 +7,15 @@ spring:
   application:
     name: my-eureka
 eureka:
+  server:
+    enable-self-preservation: false # 关闭保护机制
+  client:
+#    register-with-eureka: false # false 代表不想在注册中心注册自己
+    registry-fetch-interval-seconds: 7 # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/,http://localhost:1112/eureka/,http://localhost:1113/eureka/
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   instance:
     hostname: localhost
-    leaseRenewalIntervalInSeconds: 11
+    lease-renewal-interval-in-seconds: 5 # 发送心跳给注册中心的频率,即续约任务间隔时间 默认30秒
     prefer-ip-address: true
-  client:
-    register-with-eureka: false # false 代表不想在注册中心注册自己
-    registryFetchIntervalSeconds: 7 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

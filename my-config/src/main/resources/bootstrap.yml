@@ -1,6 +1,6 @@
 management:
  security:
-  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
+  enabled: false #false为不认证，解决关于springboot-actuator监控的401无权限访问
 spring:
   config:
     name: application-native #本地开发环境

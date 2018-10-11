@@ -1,4 +1,21 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka/,http://localhost:1112/eureka/,http://localhost:1113/eureka/
+    registry-fetch-interval-seconds: 5 # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+  instance:
+   lease-renewal-interval-in-seconds: 5 # 发送心跳给注册中心的频率,即续约任务间隔时间 默认30秒
+   lease-expiration-duration-in-seconds: 60 # 服务时效时间，默认90s
+   prefer-ip-address: true #显示服务器IP
+
 #spring cloud的通用配置
+info:
+  version: "v1"
+  name: "gyh"
+management:
+ security:
+  enabled: false #false为不认证，解决关于springboot-actuator监控的401无权限访问
+
 server:
   undertow:
     buffer-size: 1024
@@ -7,12 +24,7 @@ server:
     min-spare-threads: 100 #最小活跃线程数
     max-connections: 10000 #在任何给定的时间服务器接受并处理的最大连接数
   connection-timeout: 80000 #设置tomcat连接超时时间
-info:
-  version: "v2"
-  name: "gyh"
-management:
- security:
-  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
+
 spring: 
   mvc:
     throw-exception-if-no-handler-found: true
@@ -39,6 +51,7 @@ spring:
     loadbalancer:
       retry:
         enabled: true
+
 feign:
   hystrix:
    enabled: true # Feign 整合 Hystrix开启Hystrix断路器
@@ -52,6 +65,7 @@ hystrix:
   threadpool: #线程池核心线程数
     default:
      coreSize: 1000 #缺省为10
+
 ribbon:
   ConnectTimeout: 60000 #请求连接的超时时间
   ReadTimeout: 60000 #请求处理的超时时间

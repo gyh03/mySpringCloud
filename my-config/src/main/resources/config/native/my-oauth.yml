@@ -15,17 +15,3 @@ hystrix:
           strategy: SEMAPHORE
           thread:
             timeoutInMilliseconds: 60000  #设置API网关路由路由转发请求的hystrixCommand执行超时时间 单位毫秒
-management:
- security:
-  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
-gyh:
-  oauth:
-    clientId: my_oauth
-    secret: my_secret
-    scopes: gyh
-    accessTokenSeconds: 1800 # 30分钟
-    refreshTokenSeconds: 86400
-    authorizedGrantTypes:
-    - password
-    - authorization_code
-    - refresh_token

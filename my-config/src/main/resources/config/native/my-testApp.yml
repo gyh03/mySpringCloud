@@ -1,9 +1,3 @@
-info:
-  version: "v2"
-  name: "gyh"
-management:
- security:
-  enabled: true #false为不认证，解决关于springboot-actuator监控的401无权限访问
 server:
   port: 9098
   context-path: /

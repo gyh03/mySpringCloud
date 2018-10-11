@@ -1,5 +1,5 @@
 info:
-  version: "v2"
+  version: "v1"
   name: "gyh"
 #端口号
 server:
@@ -9,7 +9,6 @@ spring:
     name: my-config
   profiles:
     active: native
-
 #本地配置地址
   cloud:
     config:
@@ -23,10 +22,10 @@ spring:
     port: 5672
     username: rabbitadmin
     password: 123456
-eureka:
-  client:
-    #服务端地址
-    serviceUrl:
-      defaultZone: http://localhost:1111/eureka/
-  instance:
-    ip-address: true
+#eureka:
+#  client:
+#    #服务端地址
+#    serviceUrl:
+#      defaultZone: http://localhost:1111/eureka/
+#  instance:
+#    ip-address: true
