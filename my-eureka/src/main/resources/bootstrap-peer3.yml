@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    config:
+       uri: http://localhost:8888/
+       enabled: true
+       name: springCloud #对应{application-dev}部分
+       profile: default  #对应{-dev} 部分
+  application:
+    name: my-eureka
+#端口号
+server:
+   port: 1113
+   tomcat:
+     max-threads: 200
+eureka:
+  instance:
+    hostname: localhost
+    leaseRenewalIntervalInSeconds: 11
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false # false 代表不想在注册中心注册自己
+    registryFetchIntervalSeconds: 7 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/,http://localhost:1112/eureka/,http://localhost:1113/eureka/
+
+

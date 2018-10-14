@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+       uri: http://localhost:8888/
+       enabled: true
+       name: my-eureka,springCloud #对应{application-dev}部分
+       profile: default,default  #对应{-dev} 部分
+
