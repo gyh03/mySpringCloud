@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    config:
+       uri: http://localhost:8888/
+       enabled: true
+       name: my-gateway,springCloud #要读取的配置文件名 对应{application}部分  http://192.168.3.53:8761
+       profile: default,default   #对应dev prod test 部分
+       username: gyhConfigUser
+       password: gyhConfigPwd
+    bus:
+      trace:
+        enabled: true #开启消息跟踪
+logging:
+    level:
+      com:
+        netflix:
+         loadbalancer:
+           LoadBalancerContext: DEBUG
