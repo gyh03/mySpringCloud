@@ -1,0 +1,15 @@
+package com.gyh.feign;
+
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+
+/**
+ * @author guoyanhong
+ * @date 2018/10/17 16:01
+ */
+@FeignClient("my-testApp")
+public interface FirstFeignService {
+
+    @GetMapping("getSomeMsg")
+    Object getSomeMsg() ;
+}
