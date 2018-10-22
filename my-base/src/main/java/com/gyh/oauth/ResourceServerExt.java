@@ -118,7 +118,6 @@ public class ResourceServerExt extends ResourceServerConfigurerAdapter {
                 } else {
                     return new ResponseEntity(body, headers, responseEntity.getStatusCode());
                 }
-
             }
         };
     }

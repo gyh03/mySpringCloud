@@ -1,7 +1,9 @@
 package com.gyh.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.JedisCluster;
 
 /**
  * @author guoyanhong
@@ -10,8 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FristController {
 
+    @Autowired
+    private JedisCluster jedisCluster;
+
     @GetMapping("getSomeMsg")
-    public Object getSomeMsg(){
-        return "i`m your father";
+    public Object getSomeMsg() {
+        jedisCluster.set("myname", "gyh");
+        return "i`m your father ,my name is " + jedisCluster.get("myname");
     }
 }
