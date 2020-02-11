@@ -3,7 +3,9 @@ spring:
     config:
        uri: http://localhost:8888/
        enabled: true
+#       name: my-testApp
+#       profile: default
        name: my-mysql,my-redis,my-oauth,springCloud,my-testApp,my-rabbitmq #要读取的配置文件名 对应{application}部分
        profile: default,default,default,default,default,default #映射到客户端上的“spring.profiles.active”（逗号分隔列表）; 和
-       username: gyhConfigUser
-       password: gyhConfigPwd
+#       username: gyhConfigUser
+#       password: gyhConfigPwd

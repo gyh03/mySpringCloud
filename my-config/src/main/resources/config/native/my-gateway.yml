@@ -8,7 +8,7 @@ server:
   connection-timeout: 20000 #设置tomcat连接超时时间
 spring:
   application:
-    name: my-gateway
+    name: myZuulApp
   sleuth:
    sampler:
      percentage: 1.0 #加快收集效率

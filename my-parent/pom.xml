@@ -9,21 +9,25 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>../my-utils</module>
         <module>../my-base</module>
         <module>../my-config</module>
         <module>../my-eureka</module>
-        <module>../my-gateway</module>
+        <module>../my-zuul</module>
         <module>../my-oAuth</module>
         <module>../my-testApp</module>
         <module>../my-testApp2</module>
-        <module>../my-zipkin</module>
     </modules>
 
+    <!--  springcloud 与 springboot 有版本对应，
+                具体参考官网：https://spring.io/projects/spring-cloud 下的Release Trains -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.9.RELEASE</version>
+        <version>2.1.12.RELEASE</version>
     </parent>
+
+
     <properties>
         <java.version>1.8</java.version>
         <docker.image.prefix>hio</docker.image.prefix>
@@ -32,6 +36,11 @@
         <argLine>-Dfile.encoding=UTF-8</argLine>
         <fastdfs.version>1.25</fastdfs.version>
         <skiptests>true</skiptests>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!--        <junit.version>4.12</junit.version>-->
+        <!--        <log4j.version>1.2.17</log4j.version>-->
+        <lombok.version>1.16.18</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -39,117 +48,91 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Dalston.SR4</version>
+                <version>Greenwich.SR3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- mysql连接，版本需要与使用的MySQL数据库的版本一致-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.18</version>
+            </dependency>
+            <!--mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>1.3.1</version>
+            </dependency>
+            <!--mapper -->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>1.1.4</version>
+            </dependency>
+            <!-- druid 数据源 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.1.18</version>
+            </dependency>
+
+            <!-- lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.8.1</version>
+            </dependency>
+
+            <!--<dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>1.2.3</version>
+            </dependency>-->
+            <!--<dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>-->
+            <!--<dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>-->
+            <!--<dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>2.9.0</version>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
+
     <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <url>http://192.168.3.135:8081/nexus/content/repositories/ERP-Platform/</url>
-        </repository>
+        <!--<repository>
+        <id>nexus-releases</id>
+        <url>http://192.168.3.135:8081/nexus/content/repositories/ERP-Platform/</url>
+    </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <url>http://192.168.3.135:8081/nexus/content/repositories/ERP-Platform/</url>
-        </snapshotRepository>
+        </snapshotRepository>-->
     </distributionManagement>
-
-    <dependencies>
-        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!--aop-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <!--配置客户端-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-
-        <!--eureka客户端-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
-
-        <!--监控-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <!--Spring Boot Admin客户端-->
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>1.5.7</version>
-        </dependency>
-        <!--断路器-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix</artifactId>
-        </dependency>
-
-        <!--断路器仪表盘-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>-->
-        <!--</dependency>-->
-
-        <!--ribbon负载-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-ribbon</artifactId>
-        </dependency>
-
-        <!--feign-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-common</artifactId>
-            <version>2.26</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.20</version>
-        </dependency>
-        <!--日志动态级别修改-->
-        <dependency>
-            <groupId>org.jolokia</groupId>
-            <artifactId>jolokia-core</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!--fork :  如果没有该项配置，肯呢个devtools不会起作用，即应用不会restart -->
+                    &lt;!&ndash;fork :  如果没有该项配置，devtools 不会起作用，即应用不会restart &ndash;&gt;
                     <fork>true</fork>
                 </configuration>
                 <executions>
@@ -159,7 +142,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <!-- 生成源码包 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

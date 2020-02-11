@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,8 +18,8 @@ import java.text.SimpleDateFormat;
  * @author guoyanhong
  * @date 2018/9/29 9:52
  */
+@Slf4j
 public class JacksonUtils {
-	private static Logger logger = Logger.getLogger(JacksonUtils.class);
 
 	private static ObjectMapper mapper;
 
@@ -54,11 +54,11 @@ public class JacksonUtils {
 			return getMapper().readValue(jsonString, clazz);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		} catch (JsonMappingException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		} catch (IOException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return null;
 	}
@@ -70,7 +70,7 @@ public class JacksonUtils {
 		try {
 			return getMapper().writeValueAsString(object);
 		} catch (JsonProcessingException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return null;
 	}
@@ -85,11 +85,11 @@ public class JacksonUtils {
 		try {
 			return getMapper().readValue(jsonString, javaType);
 		} catch (JsonParseException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		} catch (JsonMappingException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		} catch (IOException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return null;
 	}

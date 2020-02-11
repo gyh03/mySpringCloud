@@ -1,30 +1,26 @@
 server:
-  port: 9098
+  port: 8080
   context-path: /
   tomcat:
     max-threads: 200
 spring:
   application:
-    name: my-testApp
+    name: myTestApp
 
-hadoop:
-  hdfs-url: hdfs://cluster1
-  hdfs-user: hadoop
-  hdfs-append: true
-  hdfs-root-path: /dev-path
-  hdfsPool: # hdfs 连接池配置
-    maxTotal: 16
-    maxIdle: 16
-    minIdle: 0
-    maxWaitMillis: 30000 #如果这个值小于0，则永不超时; 如果大于0，则等待maxWaitMillis长时间,单位是毫秒
-#过滤器配置#     
-urlFilter:
-     #不过滤列表#
-     unfilteredList:
-        -  /disk/diskCompanyInit/queryCompanyDiskSpace
-####################################  fs param  ########################################################
-fsPool:
-  corePoolSize: 20
-  maximunPoolSize: 30
-  keepAliveTime: 0
-  queueCapacity: 1024
+#hadoop:
+#  hdfs-url: hdfs://cluster1
+#  hdfs-user: hadoop
+#  hdfs-append: true
+#  hdfs-root-path: /dev-path
+#  hdfsPool: # hdfs 连接池配置
+#    maxTotal: 16
+#    maxIdle: 16
+#    minIdle: 0
+#    maxWaitMillis: 30000 #如果这个值小于0，则永不超时; 如果大于0，则等待maxWaitMillis长时间,单位是毫秒
+#
+#####################################  fs param  ########################################################
+#fsPool:
+#  corePoolSize: 20
+#  maximunPoolSize: 30
+#  keepAliveTime: 0
+#  queueCapacity: 1024

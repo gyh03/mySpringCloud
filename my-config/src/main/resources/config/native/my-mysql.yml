@@ -1,17 +1,12 @@
 spring:
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/mymms?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useAffectedRows=true&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123456root
+    driverClassName: com.mysql.cj.jdbc.Driver #mysql 8.*以上版本需要用此类型的驱动，并且pom依赖也需要调整为相应的MySQL版本
+#    driverClassName:  com.mysql.jdbc.Driver
     druid:
-    # 192.168.3.81 putest putest123
-#      url:  jdbc:mysql://192.168.3.81:3306/erp_platform_server?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
-#      username: putest
-#      password: putest123
-      #开发环境库
-      url: jdbc:mysql://112.74.181.24:3306/cache?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useAffectedRows=true&zeroDateTimeBehavior=convertToNull
-      #   测试库
-      # url:  jdbc:mysql://192.168.3.149:8066/erp_platform_server?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
-      username: root
-      password: 123456
-      driverClassName:  com.mysql.jdbc.Driver
       initialSize:  10
       minIdle: 10
       maxActive: 20

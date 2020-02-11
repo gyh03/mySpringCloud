@@ -1,10 +1,11 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:1111/eureka/,http://localhost:1112/eureka/,http://localhost:1113/eureka/
-    registry-fetch-interval-seconds: 5 # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+      defaultZone: http://localhost:1111/eureka/
+#      defaultZone: http://localhost:1111/eureka/,http://localhost:1112/eureka/,http://localhost:1113/eureka/
+#    registry-fetch-interval-seconds: 5 # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
   instance:
-   lease-renewal-interval-in-seconds: 5 # 发送心跳给注册中心的频率,即续约任务间隔时间 默认30秒
+#   lease-renewal-interval-in-seconds: 5 # 发送心跳给注册中心的频率,即续约任务间隔时间 默认30秒
    lease-expiration-duration-in-seconds: 60 # 服务时效时间，默认90s
    prefer-ip-address: true #显示服务器IP
 

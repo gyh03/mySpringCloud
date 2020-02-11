@@ -5,17 +5,17 @@ server:
      max-threads: 200
 spring:
   application:
-    name: my-eureka
+    name: myEurekaApp
 eureka:
-  server:
-    enable-self-preservation: false # 关闭保护机制
+#  server:
+#    enable-self-preservation: false # 关闭保护机制
   client:
-#    register-with-eureka: false # false 代表不想在注册中心注册自己
-    registry-fetch-interval-seconds: 7 # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    register-with-eureka: false # false 代表不想在注册中心注册自己
+#    registry-fetch-interval-seconds: 7 # 表示eureka client间隔多久去拉取服务注册信息，默认为30秒
     serviceUrl:
-      defaultZone: http://localhost:1111/eureka/,http://localhost:1112/eureka/,http://localhost:1113/eureka/
-#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      defaultZone: http://localhost:1111/eureka/,http://localhost:1112/eureka/,http://localhost:1113/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   instance:
     hostname: localhost
-    lease-renewal-interval-in-seconds: 5 # 发送心跳给注册中心的频率,即续约任务间隔时间 默认30秒
+#    lease-renewal-interval-in-seconds: 5 # 发送心跳给注册中心的频率,即续约任务间隔时间 默认30秒
     prefer-ip-address: true

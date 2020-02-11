@@ -2,7 +2,7 @@ package com.gyh.fallback;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.netflix.zuul.filters.route.ZuulFallbackProvider;
+import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,10 +18,9 @@ import java.io.InputStream;
  * 这时候我们希望Zuul提供一种降级功能，而不是将异常暴露出来。
  * <p>
  * 需要注意的是，这个熔断器不支持以url配置的路由，必须要用serviceId的方式路由的方式才能使用熔断器
- * Created by wf on 2018/1/16.
  */
-public class FallbackProvider implements ZuulFallbackProvider {
-    private static Logger log = LoggerFactory.getLogger(FallbackProvider.class);
+public class MyFallbackProvider implements FallbackProvider {
+    private static Logger log = LoggerFactory.getLogger(MyFallbackProvider.class);
     private String route = null;
     //服务不可用
     private int rawStatusCode = 503;
@@ -48,7 +47,7 @@ public class FallbackProvider implements ZuulFallbackProvider {
      * @return
      */
     @Override
-    public ClientHttpResponse fallbackResponse() {
+    public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
         return new ClientHttpResponse() {
             /**
              * 网关向api服务请求是失败了，但是消费者客户端向网关发起的请求是OK的，

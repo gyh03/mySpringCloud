@@ -2,13 +2,15 @@ package com.gyh;
 
 //import com.jzy.gyh.api.gate.filter.PreFilter;
 
-import com.gyh.fallback.FallbackProvider;
+import com.gyh.fallback.MyFallbackProvider;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.cloud.netflix.zuul.filters.route.ZuulFallbackProvider;
+import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
+//import org.springframework.cloud.netflix.zuul.filters.route.ZuulFallbackProvider;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -21,8 +23,7 @@ import javax.servlet.MultipartConfigElement;
 public class GatewayApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(GatewayApplication.class)
-                .web(true).run(args);
+        new SpringApplicationBuilder(GatewayApplication.class).run(args);
         System.out.println("【【【【【【 GatewayApplication 微服务 】】】】】】已启动.");
     }
 //	@Bean
@@ -31,16 +32,17 @@ public class GatewayApplication {
 //	}
 
     @Bean
-    public ZuulFallbackProvider authFallbackProvider() {
-        FallbackProvider myFallbackProvider = new FallbackProvider();
+    @Primary
+    public FallbackProvider authFallbackProvider() {
+        MyFallbackProvider myFallbackProvider = new MyFallbackProvider();
         myFallbackProvider.setRoute("auth-server");
         return myFallbackProvider;
     }
 
 
     @Bean
-    public ZuulFallbackProvider testAppFallbackProvider() {
-        FallbackProvider myFallbackProvider = new FallbackProvider();
+    public FallbackProvider testAppFallbackProvider() {
+        MyFallbackProvider myFallbackProvider = new MyFallbackProvider();
         myFallbackProvider.setRoute("testApp");
         return myFallbackProvider;
     }
