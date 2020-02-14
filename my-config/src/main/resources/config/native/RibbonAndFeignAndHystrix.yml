@@ -1,0 +1,25 @@
+feign:
+  hystrix:
+   enabled: true # Feign 整合 Hystrix开启Hystrix断路器
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 130000  #设置API网关路由路由转发请求的hystrixCommand执行超时时间 单位毫秒
+  threadpool: #线程池核心线程数
+    default:
+     coreSize: 1000 #缺省为10
+
+ribbon:
+  ConnectTimeout: 60000 #请求连接的超时时间
+  ReadTimeout: 60000 #请求处理的超时时间
+  MaxAutoRetries: 1  #对当前实例的重试次数
+  MaxAutoRetriesNextServer: 1 #切换实例的重试次数
+  OkToRetryOnAllOperations: true #对所有操作请求都进行重试
+  MaxTotalConnections: 2000   # 默认值
+  MaxConnectionsPerHost: 2000 # 默认值
+  eager-load: #缓存Ribbon配置
+    enabled: true
+    clients: my-oAuth,my-testApp

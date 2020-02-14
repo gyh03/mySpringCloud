@@ -1,0 +1,35 @@
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  freemarker: 
+    cache:  false
+    request-context-attribute:  request
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  session:
+    store-type: none
+  http:
+    multipart:
+      enabled: true   # 启用http上传处理
+      max-file-size: 100MB # 设置单个文件的最大长度
+      max-request-size: 100MB # 设置最大的请求文件的大小
+      file-size-threshold: 1MB  # 当上传文件达到1MB的时候进行磁盘写入
+      location: /  # 上传的临时目录
+  sleuth:
+   sampler:
+     percentage: 1 #加快收集效率
+  cloud:   #启动负载均衡的重试机制，默认false
+    loadbalancer:
+      retry:
+        enabled: true
+
+server:
+  undertow:
+    buffer-size: 1024
+  tomcat:
+    max-threads: 800 #最大线程数
+    min-spare-threads: 100 #最小活跃线程数
+    max-connections: 10000 #在任何给定的时间服务器接受并处理的最大连接数
+  connection-timeout: 80000 #设置tomcat连接超时时间

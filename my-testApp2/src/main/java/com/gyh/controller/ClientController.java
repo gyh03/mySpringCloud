@@ -26,6 +26,6 @@ public class ClientController {
 
     @GetMapping("getSomeMsg2")
     public Object getSomeMsg2() {
-        return "restTemplate msg >> " + restTemplate.getForObject("http://my-testApp/getSomeMsg", Object.class);
+        return "restTemplate msg >> " + restTemplate.getForObject("http://myTestApp/getSomeMsg", Object.class);
     }
 }

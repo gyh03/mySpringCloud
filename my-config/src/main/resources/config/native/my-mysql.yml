@@ -20,5 +20,5 @@ spring:
       validationQuery:  SELECT 'x'
       maxPoolPreparedStatementPerConnectionSize: 20
       minEvictableIdleTimeMillis: 300000
-      filters: stat,log4j
+      filters: stat,wall
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=100
